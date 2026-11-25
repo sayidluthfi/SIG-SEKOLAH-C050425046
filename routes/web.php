@@ -1,4 +1,3 @@
-
 <?php
 
 use App\Http\Controllers\AuthController;
@@ -9,6 +8,7 @@ use App\Http\Controllers\ProfilSekolahController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PasswordController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 
 // Halaman publik peta
 Route::controller(PetaController::class)->group(function () {
@@ -24,12 +24,31 @@ Route::controller(PetaController::class)->group(function () {
     Route::get('/gabungan', 'gabungan')->name('peta.gabungan');
 });
 
-
 // Halaman profil publik sekolah
 Route::get('/sekolah/{sekolah}/profil-publik', [
     ProfilSekolahController::class,
     'publicShow'
 ])->name('sekolah.profil.public');
+
+// Health check aplikasi dan database
+Route::get('/health', function () {
+    try {
+        DB::connection()->getPdo();
+
+        return response()->json([
+            'status' => 'OK',
+            'database' => 'connected',
+            'message' => 'Aplikasi dan database berjalan dengan baik.'
+        ], 200);
+
+    } catch (\Throwable $e) {
+        return response()->json([
+            'status' => 'ERROR',
+            'database' => 'disconnected',
+            'message' => 'Koneksi database gagal.'
+        ], 503);
+    }
+});
 
 // Tamu
 Route::middleware('guest')->group(function () {
