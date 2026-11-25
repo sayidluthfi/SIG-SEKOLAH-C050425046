@@ -1,0 +1,22 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "WADMKC": "Banjarbaru Selatan"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [114.59, -3.31],
+            [114.60, -3.32],
+            [114.61, -3.31],
+            [114.59, -3.31]
+          ]
+        ]
+      }
+    }
+  ]
+}
